@@ -1,0 +1,31 @@
+#!/bin/bash
+# Arg 1: Number of numbers
+# Arg 2: Number of trials
+
+echo "Preparing files."
+gcc ./c_add.c
+
+echo "Generating random numbers."
+ruby ./gen.rb $1
+
+for (( i=0; i < $2; i++)) do
+
+	printf "\r\nC: trial #%d\r\n" $((i+1))
+	#TIME="%E" gtime ./a.out ./nums # less accurate?
+	{ time ./a.out ./nums ; } 2> tmp
+	cat ./tmp
+	#cat ./tmp | sed -nE 's/real.*([0-9]+\.[0-9]+s)/\1/p'
+	rm ./tmp
+	
+	printf "\r\nRuby: trial #%d\r\n" $((i+1))
+	#TIME="%E" gtime ruby ./ruby_add.rb ./nums # less accurate?
+	{ time ruby ./ruby_add.rb ./nums ; } 2> tmp
+	cat ./tmp | sed -nE 's/real.*([0-9]+\.[0-9]+s)/\1/p'
+	rm ./tmp
+
+	printf "\r\nPython: trial #%d\r\n" $((i+1))
+	{ time python ./py_add.py ./nums ; } 2> tmp
+	cat ./tmp | sed -nE 's/real.*([0-9]+\.[0-9]+s)/\1/p'
+	rm ./tmp
+
+done
