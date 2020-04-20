@@ -1,0 +1,20 @@
+#!/bin/bash
+# Generate a very simple rails app.
+
+# Create new application
+rails new my_rails_app
+
+# Go there
+cd my_rails_app
+
+# Get up to date
+bundle install
+
+# Generate some new resource
+rails generate scaffold article title:string blurb:string author_fname:string author_lname:string
+
+# Migrate the database to the new model generated above
+rake db:migrate
+
+# Start up the server
+rails server
