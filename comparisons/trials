@@ -13,8 +13,7 @@ for (( i=0; i < $2; i++)) do
 	printf "\r\nC: trial #%d\r\n" $((i+1))
 	#TIME="%E" gtime ./a.out ./nums # less accurate?
 	{ time ./a.out ./nums ; } 2> tmp
-	cat ./tmp
-	#cat ./tmp | sed -nE 's/real.*([0-9]+\.[0-9]+s)/\1/p'
+	cat ./tmp | sed -nE 's/real.*([0-9]+\.[0-9]+s)/\1/p'
 	rm ./tmp
 	
 	printf "\r\nRuby: trial #%d\r\n" $((i+1))
